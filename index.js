@@ -7,11 +7,12 @@ const searchbox = document.querySelector(".search-box");
 searchbox.addEventListener("keypress", setQuery);
 
 function setQuery(evt) {
-  if (evt.keyCode == 13) {
+  
+   if (evt.keyCode == 13) {
     getResults(searchbox.value);
-    
   }
-}
+}     
+    
 
 function getResults(query) {
   fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
@@ -19,10 +20,7 @@ function getResults(query) {
       return weather.json();
     })
     .then(displayResults);
-
 }
-
-console.log((Date()));
 
 let date = document.querySelector(".location .date");
 let now = new Date();
@@ -36,7 +34,14 @@ tym.innerText = getTym(now);
 function displayResults(weather) {
   console.log(weather);
   let city = document.querySelector(".location .city");
-  city.innerText = `${weather.name}, ${weather.sys.country}`;
+  try { 
+    city.innerText = `${weather.name}, ${weather.sys.country}`;
+  }
+  catch(city){
+    alert("Sorry, Not Available");
+  }
+
+
 
   date.innerText = dateBuilder(now);
   
